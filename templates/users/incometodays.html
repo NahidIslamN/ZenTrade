@@ -1,0 +1,216 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Income Today QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">Today</li>
+      </ol>
+    </nav>
+  </div>
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+         
+          <div class="tab-content pt-2">
+
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+              <h5 class="card-title">Todays Income</h5>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Email</div>
+                <div class="col-lg-9 col-md-8">{{user.email}}</div>
+              </div>
+              <br>
+
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Balance</div>
+                <div class="col-lg-9 col-md-8">{{income_today.incomefee|floatformat:2}} $</div>
+              </div>
+
+              
+
+
+
+            </div>
+
+           
+
+            <div class="tab-pane fade pt-3" id="profile-settings">
+
+              <!-- Settings Form -->
+              <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <input type="hidden" name="_method" value="CHANGESETTINGS">
+
+
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Settings</label>
+                  <div class="col-md-8 col-lg-9">
+                    
+                    <div class="form-check">
+
+                      {% if user.Changesmadetoyouraccount %}
+                      <input class="form-check-input" name="madechangeaccount" value="True" type="checkbox" id="changesMade" checked>
+                      {% else %}
+                      <input class="form-check-input" name="madechangeaccount" value="False" type="checkbox" id="changesMade" >
+                      {% endif %}
+
+                      <label class="form-check-label" for="changesMade">
+                        Changes made to your account
+                      </label>
+                    </div>
+
+
+
+
+
+                    <div class="form-check">
+                      {% if user.two_stepverified %}
+                      <input class="form-check-input" name="two_stepverified" value="True" type="checkbox" id="changesMade" checked>
+                      {% else %}
+                      <input class="form-check-input" name="two_stepverified" value="False" type="checkbox" id="changesMade" >
+                      {% endif %}
+                      <label class="form-check-label" for="newProducts">
+                        two step varification when log in                          
+                      </label>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="form-check">
+                      {% if user.Marketingandpromooffers %}
+                      <input class="form-check-input" name="Marketingandpromooffers" value="True" type="checkbox" id="changesMade" checked>
+                      {% else %}
+                      <input class="form-check-input" name="Marketingandpromooffers" value="False" type="checkbox" id="changesMade" >
+                      {% endif %}
+                      <label class="form-check-label" for="proOffers">
+                        Marketing and promo offers
+                      </label>
+                    </div>
+
+
+                    
+                    <div class="form-check">
+                      {% if user.Informationonnewtrade %}
+                      <input class="form-check-input" name="Informationonnewtrade" value="True" type="checkbox" id="changesMade" checked>
+                      {% else %}
+                      <input class="form-check-input" name="Informationonnewtrade" value="False" type="checkbox" id="changesMade" >
+                      {% endif %}
+                      <label class="form-check-label" for="proOffers">
+                        Get touch with us!
+                      </label>
+                    </div>
+
+
+
+
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                      <label class="form-check-label" for="securityNotify">
+                        Security alerts
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+              </form><!-- End settings Form -->
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="tab-pane fade pt-3" id="profile-change-password">
+              <!-- Change Password Form -->
+              <form method="post" action="{% url 'profile' %}" >
+                {% csrf_token %}
+
+                <input type="hidden" name="_method" value="CHANGEPASSKEY">
+
+                <div class="row mb-3">
+                  <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="old_password" type="password" class="form-control" id="currentPassword">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="new_password" type="password" class="form-control" id="newPassword">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">ConfirmPassword</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="confirm_password" type="password" class="form-control" id="renewPassword">
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Change Password</button>
+                </div>
+              </form><!-- End Change Password Form -->
+
+            </div>
+
+          </div><!-- End Bordered Tabs -->
+        
+
+         
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+
+
+{% endblock content %}

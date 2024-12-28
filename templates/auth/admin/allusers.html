@@ -1,0 +1,114 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">User Managements</li>
+      </ol>
+    </nav>
+  </div>
+  <hr><!-- End Page Title -->
+
+  <!-- "{% url 'signup' %}" -->
+
+  <h4><b>All USERS</b></h4>
+  
+<hr>
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">All USERS</h5>
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+
+            <thead>
+              <tr>
+                <th>
+                  <b>E</b>mails
+                </th>
+
+                <th>
+                  <b>P</b>hone
+                </th>
+
+                <th>Country</th>
+                <th>City</th>
+                
+                <th>Image</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% if allusers %}
+              {% for x in allusers %}
+
+              <tr>
+                <td>{{x.email}}</td>
+                <td>{{x.phone}}</td>
+                <td>{{x.country}}</td>
+                <td>{{x.city}}</td>
+                <td>
+                  <a href="/adminitratetionquicktradeing/AuthApp/customuser/{{x.id}}/change/">
+                    {% if x.profile_pic %}
+                    <img style="width: 50px;" class="rounded-circle" src="{{x.profile_pic.url}}" alt="img">
+                    {% else %}
+                    <img style="width: 50px;" class="rounded-circle" src="/static/images/user.jpg" alt="img">
+                    {% endif %}
+                  </a>
+                </td>
+              </tr>
+             
+              {% endfor %}
+
+              {% else %}
+
+              <tr>
+                <td>No user found!</td>               
+              </tr>
+
+              {% endif %}
+
+
+
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+
+
+{% endblock content %}

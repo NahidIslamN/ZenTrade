@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>
+    {% block title %}
+
+    {% endblock title %}
+</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/static/images/img.png" rel="icon">
+  <link href="/static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/static/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/static/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/assets/css/style.css" rel="stylesheet">
+  
+  {% block extralinks %}
+
+
+  {% endblock extralinks %}
+
+
+<style>
+        /* Header Background */
+    .header {
+      background-color: #273c75; /* Dark Blue */
+    }
+
+    /* Logo Text */
+    .logo span {
+      color: #e9f3ff; /* Light Blue */
+    }
+
+    /* Sidebar Toggle Icon */
+    .bi-list {
+      color: #e9f3ff; /* Light Blue */
+    }
+
+    /* Search Bar */
+    .search-bar input[type="text"] {
+      background-color: #e9f3ff; /* Light Blue */
+      color: #0056b3; /* Dark Blue Text */
+    }
+
+    .search-bar button {
+      color: #007bff; /* Primary Blue */
+    }
+
+    /* Notification Icon & Badge */
+    .nav-icon .bi-bell, .nav-icon .bi-chat-left-text {
+      color: #007bff; /* Primary Blue */
+    }
+
+    .badge.bg-primary {
+      background-color: #007bff; /* Primary Blue */
+    }
+
+    .dropdown-menu {
+      background-color: #e9f3ff; /* Light Blue */
+    }
+
+    /* Notification and Message Items */
+    .notification-item h4, .message-item h4 {
+      color: #0056b3; /* Dark Blue */
+    }
+
+    .notification-item p, .message-item p {
+      color: #6c757d; /* Muted Blue */
+    }
+
+    /* Profile Name */
+    .nav-profile .dropdown-toggle {
+      color: #e9f3ff; /* Light Blue */
+    }
+
+    .profile .dropdown-header h6 {
+      color: #007bff; /* Primary Blue */
+    }
+
+    .profile .dropdown-item {
+      color: #0056b3; /* Dark Blue */
+    }
+
+    .profile .dropdown-item i {
+      color: #007bff; /* Primary Blue */
+    }
+
+
+
+    /* Sidebar Background */
+    .sidebar {
+      background: linear-gradient(180deg, #004080, #002d62); /* Rich blue gradient */
+      color: #ffffff; /* White text for high contrast */
+      font-family: Arial, sans-serif; /* Clean, readable font */
+    }
+
+    /* Sidebar Links */
+    .sidebar .nav-link {
+      color: #ffffff; /* White for text */
+      padding: 10px 15px;
+      border-radius: 4px;
+      transition: all 0.3s ease; /* Smooth transition */
+      font-weight: 500; /* Slightly bolder for readability */
+    }
+
+    .sidebar .nav-link:hover {
+      color: #b3e0ff; /* Soft sky blue on hover */
+      background-color: rgba(255, 255, 255, 0.1); /* Slight transparent white background */
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+    }
+
+    /* Active Link */
+    .sidebar .nav-link.active {
+      color: #b3e0ff; /* Soft sky blue for active links */
+      background-color: #003366; /* Darker shade for active state */
+      box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Inset shadow for active */
+    }
+
+    /* Sidebar Icons */
+    .sidebar .nav-link i {
+      color: #b3e0ff; /* Light sky blue icons */
+      font-size: 18px; /* Slightly larger icon */
+      transition: color 0.3s ease, transform 0.3s ease; /* Smooth icon transitions */
+    }
+
+    .sidebar .nav-link:hover i,
+    .sidebar .nav-link.active i {
+      color: #ffffff; /* White on hover and active */
+      transform: scale(1.1); /* Slight zoom for emphasis */
+    }
+
+    /* Collapsible Menu Arrow Icon */
+    .nav-link .bi-chevron-down {
+      color: #00253e; /* Light sky blue arrow icon */
+    }
+
+    .nav-link:hover .bi-chevron-down,
+    .nav-link.active .bi-chevron-down {
+      color: #ffffff; /* White on hover and active */
+    }
+
+
+
+    /* Submenu Background */
+    .nav-content {
+      background-color: #003366; /* Dark blue for submenu background */
+    }
+
+    .nav-content a {
+      
+      color: #ffffff; /* Light sky blue text */
+      padding: 8px 20px; /* Comfortable padding for submenu */
+    }
+
+    .nav-content a:hover {
+      color: #ffffff; /* White on hover */
+      background-color:  rgba(255, 255, 255, 0.1); /* Soft hover effect */
+    }
+
+    /* Sidebar Headers */
+
+    .nav-item .nav-link span,
+    .nav-item .nav-content a span {
+      
+      color: #ffffff; /* White text for readability */
+      font-size: 16px; /* Consistent, clear font size */
+    }
+
+
+
+
+</style>
+
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center">
+        
+        <span class="d-none d-lg-block">QuickTrade</span>
+      </a>
+      <i style="color: white;" class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form  class="search-form d-flex align-items-center" >
+        <input  type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">{{total_note}}</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have {{total_note}} new notifications
+              <a href="/user/view-notifications/"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            {% for note in all_note4 %}
+
+            <li class="notification-item">
+              <div>
+                <h4>{{note.title|slice:"0:30"}}</h4>
+                <p>{{note.discription|slice:"0:45"}}...</p>
+                <p>{{ note.created_at|timesince }} ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            {% endfor %}
+
+            <li class="dropdown-footer">
+              <a href="/user/view-notifications/">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="/static/assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            
+           
+            {% if user.profile_pic %}
+            <img src="{{user.profile_pic.url}}" alt="Profile" class="rounded-circle">
+            {% else %}
+            <img src="/static/images/user.jpg" alt="Profile" class="rounded-circle">
+            {% endif %}
+            
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.first_name}}</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{user.first_name}} {{user.last_name}}</h6>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/auth/profile/">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/auth/profile/">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/auth/signout/">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+
+
+
+  <!-- ======= Sidebar ======= -->
+  <aside  id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+
+{% if user.is_superuser%}  
+
+    
+      <li    class="nav-item">
+        <a style="background-color: #003366;"  class="nav-link " href="/user/deshboard/">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+
+  
+    <li   class="nav-item">
+      <a style="background-color: #003366;" class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="/adminitratetionquicktradeing/AuthApp/customuser/">
+        <i class="bi bi-bar-chart"></i><span>User Management</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        
+        
+        <li>
+          <a   href='/auth/admin-users/'>
+            <i class="bi bi-circle"></i><span>all users</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/adminitratetionquicktradeing/AuthApp/customuser/">
+            <i class="bi bi-circle"></i><span>admin panel</span>
+          </a>
+        </li>
+
+
+        
+      </ul>
+    </li><!-- End Components Nav -->
+
+    <li  class="nav-item">
+      <a style="background-color: #003366;"  class="nav-link " href="/adminitratetionquicktradeing/BanckManagement/bankaccount/">
+        <i class="bi bi-people"></i>
+        <span>BankManagements</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a style="background-color: #003366;"  class="nav-link " href="/accounts/processpayout/">
+          <i class="bi bi-arrow-down"></i>
+          <span>Payout Requests</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+
+
+ 
+
+
+    <li class="nav-item">
+      <a style="background-color: #003366;"  class="nav-link " href="/accounts/processeddeposite/">
+        <i class="bi bi-arrow-up"></i>
+        <span>Deposit Requests</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+
+
+
+
+
+      <li class="nav-item">
+        <a style="background-color: #003366;"  class="nav-link " href="/accounts/tradepackages/">
+          <i class="bi bi-box"></i>
+          <span>Trade Packages</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+
+
+
+
+    {% else %}
+
+
+
+    <li class="nav-item">
+      <a style="background-color: #003366;" class="nav-link " href="/user/deshboard/">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard user</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+
+
+
+
+
+    <li  class="nav-item">
+      <a style="background-color: #003366;" class="nav-link " href="/accounts/payout/">
+        <i class="bi bi-currency-dollar"></i>
+        <span>Payout</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a style="background-color: #003366;"  class="nav-link " href="/user/todaysincome/">
+        <i class="bi bi-currency-dollar"></i>
+
+        <span>Todays Income</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+    <li class="nav-item">
+      <a style="background-color: #003366;"  class="nav-link " href="/accounts/managefunds/">
+        <i class="bi bi-currency-dollar"></i>
+        <span>Manage Fund</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+    <li class="nav-item">
+      <a style="background-color: #003366;"  class="nav-link " href="/accounts/deposite-funds/">
+        <i class="bi bi-currency-dollar"></i>
+        <span>Deposit</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+
+    
+    <li  class="nav-item">
+      <a style="background-color: #003366;"  class="nav-link " href="/user/team-members/">
+        <i class="bi bi-people"></i>
+        <span>Team</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+
+    <li class="nav-item">
+      <a style="background-color: #003366;"  class="nav-link " href="/accounts/tradepackages/">
+        <i class="bi bi-box"></i>
+        <span>Trade Packages</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+
+
+    <li class="nav-item">
+      <a style="background-color: #003366;" class="nav-link " href="/accounts/investmoney/">
+        <i class="bi bi-graph-up"></i>
+        <span>My Investments</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+
+
+
+
+
+    <li class="nav-item">
+      <a style="background-color: #003366;" class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-bar-chart"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        
+        
+        <li>
+          <a href="/user/reference-members/">
+            <i class="bi bi-circle"></i><span>Refere List</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/user/all-bonus/">
+            <i class="bi bi-circle"></i><span>All Bonus</span>
+          </a>
+        </li>
+
+
+        
+      </ul>
+    </li><!-- End Components Nav -->
+
+
+    {% endif %}
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main style="background-color: #64a7ee;" id="main" class="main  text-white">
+
+    {% block content %}
+
+
+    {% endblock content %}
+ 
+
+
+  </main><!-- End #main -->
+
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="/static/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="/static/assets/vendor/quill/quill.js"></script>
+  <script src="/static/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/static/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/static/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/assets/js/main.js"></script>
+
+
+  {% block extrascripts %}
+
+  {% endblock extrascripts %}
+
+</body>
+
+</html>

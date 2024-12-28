@@ -1,0 +1,45 @@
+{% extends 'basetemp/publicbase.html' %}
+
+{% block title %}
+Verify OTP
+{% endblock title %}
+
+
+{% block content %}
+
+
+<div class="mt-5 mb-3 text-white">
+    .
+  </div>
+
+<div class="row">
+    <div class="col-8 me-auto ms-auto">
+        
+        {% if messages %}
+        {{message.tags}}  
+        <div class="alert alert-primary mt-5" role = 'alert'>
+          {% for message in messages %}
+          {{message}}
+          {% endfor %}
+
+        </div>
+        {% endif %}
+        
+<form method="post"  class="mt-5">
+    {% csrf_token %}
+
+    <div class="row mb-2">
+        <div class="col-12">
+            <label for="inputText" class="col-12 col-form-label">Enter Code</label>
+            <input required name="otp" type="number"  class="form-control">
+
+        </div>
+        <button class="btn btn-primary w-50 mt-3 mb-2 me-auto ms-auto" >submit</button>
+    </div>
+
+  
+</form>
+    </div>
+</div>
+
+{% endblock content %}

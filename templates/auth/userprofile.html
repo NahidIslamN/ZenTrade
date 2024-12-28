@@ -1,0 +1,473 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Profile ZenTrade
+{% endblock title %}
+
+{% block extralinks %}
+
+
+  <!-- Include Cropper.js CSS and JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+ 
+
+
+
+{% endblock extralinks %}
+
+
+
+
+
+
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Profile</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item">Users</li>
+        <li class="breadcrumb-item active">Profile</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-4">
+
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+            {% if user.profile_pic %}
+            <img src="{{user.profile_pic.url}}" alt="Profile" class="rounded-circle">
+            {% else %}
+            <img src="/static/images/user.jpg" alt="Profile" class="rounded-circle">
+            {% endif %}
+
+            <h2>{{user.first_name}} {{user.last_name}}</h2>
+            {% if user.is_superuser %}
+            <h3>Admin</h3>
+            {% else %}
+            <h1>user</h1>
+            {% endif %}
+            
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-xl-8">
+
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+              </li>
+
+            </ul>
+            <div class="tab-content pt-2">
+
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                
+                {% if messages %}
+                {{message.tags}}  
+                <div class="alert alert-primary mt-4" role = 'alert'>
+                  {% for message in messages %}
+                  {{message}}
+                  {% endfor %}
+
+                </div>
+                {% endif %}
+                <h5 class="card-title">About</h5>
+                <p class="small fst-italic">{{user.state}}</p>
+
+                <h5 class="card-title">Profile Details</h5>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                  <div class="col-lg-9 col-md-8">{{user.first_name}} {{user.last_name}}</div>
+                </div>
+
+
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Country</div>
+                  <div class="col-lg-9 col-md-8">{{user.country}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Address</div>
+                  <div class="col-lg-9 col-md-8">{{user.steet}}, {{user.city}}, {{user.country}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Post Code</div>
+                  <div class="col-lg-9 col-md-8">{{user.postcode}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Phone</div>
+                  <div class="col-lg-9 col-md-8">{{user.phone}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Email</div>
+                  <div class="col-lg-9 col-md-8">{{user.email}}</div>
+                </div>
+
+
+                
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">National ID</div>
+                  <div class="col-lg-9 col-md-8">{{user.nid_no}}</div>
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                <!-- Profile Edit Form -->
+                <form method="post" enctype="multipart/form-data" action="{% url 'profile' %}">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="_method" value="UPDATE">
+
+                  <div class="row mb-3">
+                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                    <div class="col-md-8 col-lg-9">
+
+                      <div>
+                        
+                      </div>
+                      
+                      {% if user.profile_pic %}
+                      <img src="{{user.profile_pic.url}}" id="previewImage", class="rounded-circle"/>
+                      {% else %}
+                      <img src="/static/images/user.jpg" id="previewImage" alt="Profile" class="rounded-circle">
+                      {% endif %}
+
+                      
+
+                      <div class="pt-2">
+
+                        <input name="pppp" class="form-control" type="file" id="uploadImage" accept="image/*"> 
+                        
+                      
+                      </div>
+
+                      
+
+                    </div>
+                  </div>
+
+
+
+
+
+
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="first_name" type="text" maxlength="70" class="form-control"  value="{{user.first_name}}">
+                    </div>
+                  </div>
+
+
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="last_name" type="text" maxlength="70" class="form-control"  value="{{user.last_name}}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                    <div class="col-md-8 col-lg-9">
+                      <textarea name="about" class="form-control"  style="height: 100px">{{user.state}}</textarea>
+                    </div>
+                  </div>
+
+                  
+
+                  <div class="row mb-3">
+                    <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="country" type="text" class="form-control" value="{{user.country}}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">City</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="city" type="text" class="form-control" id="Address" value="{{user.city}}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Steet</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="steet" type="text" class="form-control" id="Address" value="{{user.steet}}">
+                    </div>
+                  </div>
+
+
+                  <div class="row mb-3">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Post Code</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="postcode" type="text" class="form-control" value="{{user.postcode}}">
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="row mb-3">
+                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="phone" type="text" class="form-control"  value="{{user.phone}}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="email" type="email" class="form-control"  value="{{user.email}}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">National ID</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="nid" type="text" class="form-control" value="{{user.nid_no}}">
+                    </div>
+                  </div>
+
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </form><!-- End Profile Edit Form -->
+
+              </div>
+
+              <div class="tab-pane fade pt-3" id="profile-settings">
+
+                <!-- Settings Form -->
+                <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                  <input type="hidden" name="_method" value="CHANGESETTINGS">
+
+
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Settings</label>
+                    <div class="col-md-8 col-lg-9">
+                      
+                      <div class="form-check">
+
+                        {% if user.Changesmadetoyouraccount %}
+                        <input class="form-check-input" name="madechangeaccount" value="True" type="checkbox" id="changesMade" checked>
+                        {% else %}
+                        <input class="form-check-input" name="madechangeaccount" value="False" type="checkbox" id="changesMade" >
+                        {% endif %}
+
+                        <label class="form-check-label" for="changesMade">
+                          Changes made to your account
+                        </label>
+                      </div>
+
+
+
+
+
+                      <div class="form-check">
+                        {% if user.two_stepverified %}
+                        <input class="form-check-input" name="two_stepverified" value="True" type="checkbox" id="changesMade" checked>
+                        {% else %}
+                        <input class="form-check-input" name="two_stepverified" value="False" type="checkbox" id="changesMade" >
+                        {% endif %}
+                        <label class="form-check-label" for="newProducts">
+                          two step varification when log in                          
+                        </label>
+                      </div>
+
+
+
+
+
+
+
+
+
+                      <div class="form-check">
+                        {% if user.Marketingandpromooffers %}
+                        <input class="form-check-input" name="Marketingandpromooffers" value="True" type="checkbox" id="changesMade" checked>
+                        {% else %}
+                        <input class="form-check-input" name="Marketingandpromooffers" value="False" type="checkbox" id="changesMade" >
+                        {% endif %}
+                        <label class="form-check-label" for="proOffers">
+                          Marketing and promo offers
+                        </label>
+                      </div>
+
+
+                      
+                      <div class="form-check">
+                        {% if user.Informationonnewtrade %}
+                        <input class="form-check-input" name="Informationonnewtrade" value="True" type="checkbox" id="changesMade" checked>
+                        {% else %}
+                        <input class="form-check-input" name="Informationonnewtrade" value="False" type="checkbox" id="changesMade" >
+                        {% endif %}
+                        <label class="form-check-label" for="proOffers">
+                          Get touch with us!
+                        </label>
+                      </div>
+
+
+
+
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                        <label class="form-check-label" for="securityNotify">
+                          Security alerts
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </form><!-- End settings Form -->
+
+              </div>
+
+
+
+
+
+
+
+
+              <div class="tab-pane fade pt-3" id="profile-change-password">
+                <!-- Change Password Form -->
+                <form method="post" action="{% url 'profile' %}" >
+                  {% csrf_token %}
+
+                  <input type="hidden" name="_method" value="CHANGEPASSKEY">
+
+                  <div class="row mb-3">
+                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="old_password" type="password" class="form-control" id="currentPassword">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="new_password" type="password" class="form-control" id="newPassword">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">ConfirmPassword</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="confirm_password" type="password" class="form-control" id="renewPassword">
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                  </div>
+                </form><!-- End Change Password Form -->
+
+              </div>
+
+            </div><!-- End Bordered Tabs -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+
+
+
+
+
+{% block extrascripts %}
+
+
+
+<script>
+  document.getElementById('uploadImage').addEventListener('change', function() {
+    const file = this.files[0];
+    const maxSize = 100 * 1024; // 100KB in bytes
+
+    if (file && file.size > maxSize) {
+      alert("File size exceeds 100KB!");
+      this.value = ''; // Clear the file input
+    }
+  });
+</script>
+
+
+
+<script>
+  let cropper;
+  const uploadImage = document.getElementById('uploadImage');
+  const previewImage = document.getElementById('previewImage');
+
+
+  // Show image after selecting a file
+  uploadImage.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewImage.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock extrascripts %}

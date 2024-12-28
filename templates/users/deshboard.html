@@ -1,0 +1,467 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Deshboard QuickTrade
+{% endblock title %}
+
+
+{% block extralinks %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">  
+
+
+<style>
+  /* Card Background and Text */
+.info-card.sales-card {
+  background-color: #004080; /* Rich blue background */
+  color: #ffffff; /* White text */
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  padding: 15px;
+}
+
+/* Card Title Styling */
+.info-card.sales-card .card-title {
+  color: #b3e0ff; /* Soft sky blue for title */
+  font-weight: bold;
+}
+
+/* Card Icon Styling */
+.info-card.sales-card .card-icon {
+  background-color: #003366; /* Darker blue background for icon circle */
+  color: #b3e0ff; /* Sky blue icon */
+  font-size: 1.5rem; /* Larger icon */
+}
+
+/* Amount Text */
+.info-card.sales-card h6 {
+  font-size: 24px; /* Larger, readable font size */
+  font-weight: bold;
+  color: #ffffff; /* White text */
+}
+
+/* Description Text */
+.info-card.sales-card .text-success {
+  color: #b3e0ff; /* Soft blue for description */
+  font-size: 14px; /* Small font size for subtlety */
+  opacity: 0.8;
+}
+
+</style>
+
+
+
+{% endblock extralinks %}
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+  
+    </nav>
+  </div><!-- End Page Title -->
+  
+  <section class="section dashboard">
+    <div class="row">
+
+
+      {% if user.is_superuser %}
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+        <div class="row">
+
+          <!-- Card Balance -->
+          <div class="col-12 col-sm-6 col-md-6">
+            {% if messages %}
+            {{message.tags}}  
+            <div class="alert alert-primary" role = 'alert'>
+              {% for message in messages %}
+              {{message}}
+              {% endfor %}
+          
+            </div>
+            {% endif %}
+          
+
+            <div class="card info-card sales-card">
+             <div class="card-body">
+                <h5 class="card-title ">Deposits</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6  style="font-size: 20px;" >$ {{total_sumdp|floatformat:2}}</h6>
+                    <span class="text-success small pt-1 fw-bold">total deposite users</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Balance Card -->
+
+          
+          <!-- Card Total Encome -->
+          <div class="col-sm-6 col-md-6">
+
+            <div class="card info-card sales-card">
+             <div class="card-body">
+                <h5 class="card-title">Rewords</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="font-size: 20px;" >$ {{total_sumreward|floatformat:2}}</h6>
+                    <span class="text-success small pt-1 fw-bold">Total Returns</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Balance Total Encome -->
+
+
+                    
+          <!-- Card Total Encome -->
+          <div class="col-sm-6 col-md-6">
+
+            <div class="card info-card sales-card">
+             <div class="card-body">
+                <h5 class="card-title">Invests</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="font-size: 20px;" >$ {{total_suminvestment|floatformat:2}}</h6>
+                    <span class="text-success small pt-1 fw-bold">Total invests</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Balance Total Encome -->
+
+
+
+         <!-- Card Wallet Balance -->
+         <div class="col-sm-6 col-md-6">
+
+          <div class="card info-card sales-card">
+           <div class="card-body">
+              <h5 class="card-title">Payouts</span></h5>
+
+              <div class="d-flex align-items-center">
+                <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                  <i class="bi bi-currency-dollar"></i>
+                </div>
+                <div class="ps-3">
+                  <h6 style="font-size: 20px;">$ {{total_sumpayouts|floatformat:2}}</h6>
+                  <span class="text-success small pt-1 fw-bold">Total user payouts</span>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- End Wallet Balance Card -->
+
+
+
+
+
+
+
+
+
+
+          
+          <!-- Card Wallet Balance -->
+          <div class="col-sm-6 col-md-6">
+
+            <div class="card info-card sales-card">
+             <div class="card-body">
+                <h5 class="card-title">Current Status</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="font-size: 20px;" >$ {{deptorew|floatformat:2}}</h6>
+                    <span class="text-success small pt-1 fw-bold">deposite to payout</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Wallet Balance Card -->
+
+                    <!-- Card Wallet Balance -->
+                    <div class="col-sm-6 col-md-6">
+
+                      <div class="card info-card sales-card">
+                       <div class="card-body">
+                          <h5 class="card-title">Future Status</span></h5>
+          
+                          <div class="d-flex align-items-center">
+                            <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                              <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="ps-3">
+                              <h6 style="font-size: 20px;" >$ {{status|floatformat:2}}</h6>
+                              <span class="text-success small pt-1 fw-bold">total status</span>
+          
+                            </div>
+                          </div>
+                        </div>
+          
+                      </div>
+                    </div><!-- End Wallet Balance Card -->
+          
+
+
+
+
+
+
+
+
+        </div>
+      </div><!-- End Left side columns -->
+      {% else %}
+
+      <div class="col-lg-12">
+        <div class="row">
+
+          <!-- Card Balance -->
+          <div class="col-12 col-md-6">
+            {% if messages %}
+            {{message.tags}}  
+            <div class="alert alert-primary" role = 'alert'>
+              {% for message in messages %}
+              {{message}}
+              {% endfor %}
+          
+            </div>
+            {% endif %}
+          
+
+            <div class="card info-card sales-card">
+             <div class="card-body">
+                <h5 class="card-title">Balance</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="font-size: 20px;" >$ {{balance|floatformat:2}}</h6>
+                    <span class="text-success small pt-1 fw-bold">Available Balance</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Balance Card -->
+
+          
+          <!-- Card Total Encome -->
+          <div class="col-12 col-md-6">
+
+            <div class="card info-card sales-card">
+             <div class="card-body">
+                <h5 class="card-title">Income<a class="text-danger" onclick="confirmation()" href="#">(reset)</a></span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="font-size: 20px;" >$ {{income_balance|floatformat:2}}</h6>
+                    <span class="text-success small pt-1 fw-bold">Total Returns</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Balance Total Encome -->
+
+
+          
+          <!-- Card Wallet Balance -->
+          <div  class="col-12 col-md-6">
+
+            <div class="card info-card sales-card">
+             <div class="card-body">
+                <h5 class="card-title">Wallet</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="font-size: 20px;" >$ {{walet_balance|floatformat:2}}</h6>
+                    <span class="text-success small pt-1 fw-bold">Available wallet</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Wallet Balance Card -->
+
+
+
+         <!-- Card Wallet Balance -->
+            <div  class="col-12 col-md-6">
+
+                        <div class="card info-card sales-card">
+                         <div class="card-body">
+                            <h5 class="card-title">Payout<a class="text-danger" onclick="confirmation2()" href="#">(reset)</a></span></h5>
+            
+                            <div class="d-flex align-items-center">
+                              <div style="width: 40px;height: 40px;" class="card-icon rounded-circle d-flex align-items-center justify-content-center fs-4">
+                                <i class="bi bi-currency-dollar"></i>
+                              </div>
+                              <div class="ps-3">
+                                <h6 style="font-size: 20px;">$ {{total_sum|floatformat:2}}</h6>
+                                <span class="text-success small pt-1 fw-bold">Total Withdrawal</span>
+            
+                              </div>
+                            </div>
+                          </div>
+            
+                        </div>
+            </div><!-- End Wallet Balance Card -->
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+        <form>
+
+          <div class="input-group mb-5">
+            <label for="paymentaddress-a" class="col-12 col-form-label">Share the links for reference</label>
+            <input id="username-a" required type="text"  class="form-control" value="http://127.0.0.1:8000/auth/signup/?e={{user.email}}" readonly>
+            <button class="btn btn-outline-secondary" type="button" id="copyButton">
+                <i class="bi bi-clipboard"></i> <!-- Use Bootstrap Icons or FontAwesome -->
+            </button>
+        </div>
+
+        </form>
+
+
+       
+
+      </div><!-- End Left side columns -->
+
+      {% endif %}
+
+
+
+    </div>
+  </section>
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+{% block extrascripts %}
+
+
+
+<script>
+  document.getElementById('copyButton').addEventListener('click', function() {
+    const copyText = document.getElementById('username-a');
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value)
+      .then(() => {
+        alert("Copied to clipboard!");
+      })
+      .catch((error) => {
+        console.error("Copy failed", error);
+      });
+  });
+</script>
+
+
+<script>
+    function confirmation() {
+      Swal.fire({
+          title: 'Are you sure!',
+          text: "You will never get your history back again!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d63031',
+          cancelButtonColor: '#0652DD',
+          confirmButtonText: 'reset'
+      }).then((result) => {
+          if (result.isConfirmed) {
+            //document.getElementById('getreward1').click();
+            window.location.href = "/user/reset-total-income/";
+              
+          }
+      });
+    }
+</script>
+
+<script>
+  function confirmation2() {
+      Swal.fire({
+          title: 'Are you sure!',
+          text: "You will never get your history back again!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d63031',
+          cancelButtonColor: '#0652DD',
+          confirmButtonText: 'reset'
+      }).then((result) => {
+          if (result.isConfirmed) {
+            //document.getElementById('getreward1').click();
+            window.location.href = "/user/reset-payout-history/";
+              
+          }
+      });
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% endblock extrascripts %}
+

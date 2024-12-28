@@ -1,0 +1,216 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Deposite QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">Deposite Funds</li>
+      </ol>
+    </nav>
+  </div>
+  <hr><!-- End Page Title -->
+
+  <!-- "{% url 'signup' %}" -->
+
+  <h4><b>Manage Funds</b></h4>
+  
+  {% if messages %}
+  {{message.tags}}  
+  <div class="alert alert-primary" role = 'alert'>
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+
+  </div>
+  {% endif %}
+
+
+  <form action="{% url 'deposite-funds' %}" method="post">
+    {% csrf_token %}  
+
+    <div class="row mb-2">
+
+        <div class="col-12 col-md-6 mb-2">
+            <label for="inputText" class="col-12 col-form-label">Fund Type<sup class="text-danger">*</sup> </label>
+            
+            <select name="tnx_address" required class="form-select" aria-label="Default select example" id="fundTypeSelect">
+                <option value="">Select Type</option>
+                {% for x in paymentmethods %}
+                <option value="{{x.id}}" data-pay-address="{{x.PayAddress}}" data-qr-src="{{x.Qrcode.url}}">{{x.Payment_Name}}</option>
+                {% endfor %}
+
+                
+                
+            </select>
+        </div>
+
+   
+
+        <div class="col-12 col-md-6 mb-2">
+            <label for="inputText" class="col-sm-12 col-form-label">Amount<sup class="text-danger">*</sup></label>
+            <input min="25" required type="number" name="amount" value="{{ data.amount }}" class="form-control">
+        </div>
+
+        <div class="col-12 col-md-6 mb-2">
+            <label for="inputText" class="col-sm-12 col-form-label">Txn Details<sup class="text-danger">*</sup></label>
+            <input maxlength="249" required type="text" name="details" value="{{ data.details }}" placeholder="txn id | more details" class="form-control">
+        </div>
+
+        <div class="col-12 col-md-6 mb-2">
+            <label for="inputText" class="col-sm-12 col-form-label">Remarks<sup class="text-danger">*</sup></label>
+            <input required type="text" name="remarks" value="{{ data.remarks }}" class="form-control">
+        </div>
+
+        <div class="col-3 mb-2">
+            <img id="qrimage" src="" alt="" class="img-fluid">
+        </div>
+
+        <div class="col-12 mb-2">
+          <label for="paymentaddress-a" class="col-sm-12 col-form-label">QR Text (Payment Address)<sup class="text-danger">*</sup></label>
+          <div class="input-group">
+              <input id="paymentaddress-a" required type="text"  class="form-control" readonly>
+              <button class="btn btn-outline-secondary" type="button" id="copyButton">
+                  <i class="bi bi-clipboard"></i> <!-- Use Bootstrap Icons or FontAwesome -->
+              </button>
+          </div>
+      </div>
+
+
+        <button type="submit" class="btn btn-block btn-primary w-25 mt-3 me-auto ms-auto">Submit</button>
+    </div>
+</form>
+<hr>
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">My Funts From Other</h5>
+         
+
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+                <th>
+                  <b>S</b>L
+                </th>
+
+                <th>
+                  <b>T</b>nx Name
+                </th>
+
+                <th>
+                  <b>T</b>nx Details
+                </th>
+
+                <th>Ammount</th>
+                <th>Remarks</th>
+                <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% if deposite_record %}
+              {% for x in deposite_record %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                
+                <td>{{x.payadmin.Payment_Name}}</td>
+                <td>{{x.Txn_Details}}</td>
+                <td>{{x.deposite_ammount}} $</td>
+                <td>{{x.remarks}}</td>
+                <td>{{ x.updated_at|date:"d-m-Y" }}
+                </td>
+                <td>{% if x.aproved_status %} <b class="text-success">paid</b> {% else %} <b class="text-warning">painding</b>{% endif %} </td>
+              </tr>
+              {% endfor %}
+
+              {% else %}
+              <tr>
+                <td>None</td>
+                <td>None</td>
+                <td>None</td>
+                <td>None
+                </td>
+                <td>None </td>
+              </tr>
+
+              {% endif %}
+
+
+
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+  
+
+
+
+
+
+{% endblock content %}
+
+
+
+
+{% block extrascripts %}
+<script>
+    document.getElementById('fundTypeSelect').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const qrImage = document.getElementById('qrimage');
+        const paymentAddressInput = document.getElementById('paymentaddress-a');
+
+        if (selectedOption.value) {
+            const qrSrc = selectedOption.getAttribute('data-qr-src');
+            const payAddress = selectedOption.getAttribute('data-pay-address');
+
+            qrImage.src = qrSrc;
+            paymentAddressInput.value = payAddress; // Set the payment address to the selected option value
+        } else {
+            qrImage.src = ''; // Clear the QR image if no type is selected
+            paymentAddressInput.value = ''; // Clear the payment address
+        }
+    });
+
+    // Copy to clipboard function
+    document.getElementById('copyButton').addEventListener('click', function() {
+        const paymentAddressInput = document.getElementById('paymentaddress-a');
+        paymentAddressInput.select();
+        document.execCommand('copy');
+
+        // Optional: Provide feedback that the address was copied
+        alert("Payment address copied to clipboard!");
+    });
+</script>
+{% endblock extrascripts %}

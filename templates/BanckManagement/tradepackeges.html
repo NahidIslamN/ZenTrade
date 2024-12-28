@@ -1,0 +1,92 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Trade Packages QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">Trade Packeges</li>
+      </ol>
+    </nav>
+  </div>
+  <hr><!-- End Page Title -->
+
+
+  
+  <section class="section dashboard">
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+        <div class="row">
+
+          {% for x in td_packs %}
+          <!-- Card Balance -->
+          <div class="col-sm-6 col-md-3">
+
+            <div class="card info-card sales-card ">
+             <div class="card-body p-3">
+                <h5 style="border-radius: 10px;" class="card-title text-center text-white bg-warning ">{{x.title}} <br>  <small>Daily Profit {{x.range_start}}%-{{x.range_end}}%</small> </h5>
+                
+
+                <div class="d-flex align-items-center ">
+                
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold d-block">Plan {{x.Plan_start}} - {{x.Plan_end}} $</span>
+
+                    <span class="text-success small pt-1 fw-bold d-block">Return Type {{x.ReturnType}}</span>
+
+                    <span class="text-success small pt-1 fw-bold d-block">Total Earning {{x.TotalEarning}}</span>
+
+                   
+                  </div>
+                  
+                </div>
+          
+                <button class="btn btn-primary w-100 me-auto ms-auto mt-3" >Available</button>
+               
+               
+
+
+                {% if user.is_superuser %}
+                <a href="/adminitratetionquicktradeing/BanckManagement/tradepackeges/1/change//BanckManagement/tradepackeges/{{x.id}}/change/" class="d-block text-center me-auto ms-auto mt-3" >edite</a>
+                {% endif %}
+              </div>
+
+            </div>
+          </div><!-- End Balance Card -->
+          {% endfor %}  
+
+
+          {% if user.is_superuser %}
+          <a href="/adminitratetionquicktradeing/BanckManagement/tradepackeges/add/" class="btn btn-primary w-100">Add New</a>
+          {% endif %}
+
+        </div>
+      </div><!-- End Left side columns -->
+
+
+
+    </div>
+  </section>
+
+
+{% endblock content %}
+
+
+
+
+

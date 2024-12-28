@@ -1,0 +1,16 @@
+<form id="delete-form-{{x.id}}" action="{% url 'allstudents' x.id %}" method="post" style="display: inline-block;">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="DELETE">
+    <button  class="btn btn-primary" type="button" onclick="confirmDelete({{x.id}})"> <i class="fa-solid fa-trash"></i> </button>
+ </form>
+
+
+<form action="{% url 'allstudents' x.id %}" method="post" style="display: inline-block;">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="PUT">
+    <button class="btn btn-danger" type="submit"> <i class="fa-solid fa-pen"></i> </button>
+</form>
+
+
+
+

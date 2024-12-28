@@ -1,0 +1,112 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Teams QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">Reference List</li>
+      </ol>
+    </nav>
+  </div>
+  <hr><!-- End Page Title -->
+
+  <!-- "{% url 'signup' %}" -->
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Refefence List</h5>
+        
+
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+                <th>
+                  <b>U</b>ername
+                </th>
+
+                <th>
+                  Name
+                </th>
+
+                <th>Phone Number</th>
+                
+                <th>Image</th>
+
+                
+              </tr>
+            </thead>
+
+            <tbody>
+              {% if teammembers %}
+              {% for x in teammembers %}
+              <tr>
+                <td>{{x.email}}</td>
+                <td>{{x.first_name}} {{x.last_name}}</td>
+                <td>{{x.phone}}</td>
+              
+                <td>
+                  {% if x.profile_pic %}
+                  <img style="width: 50px;" class="rounded-circle" src="{{x.profile_pic.url}}" alt="img">
+                  {% else %}
+                  <img style="width: 50px;" class="rounded-circle" src="/static/images/user.jpg" alt="img">
+                  {% endif %}
+                </td>
+               
+              </tr>
+              {% endfor %}
+
+              {% else %}
+              <tr>
+                <td>None</td>
+                <td>None</td>
+                <td>None</td>
+                <td>None
+                </td>
+                
+              </tr>
+
+              {% endif %}
+
+
+
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+
+
+{% endblock content %}

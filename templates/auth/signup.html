@@ -1,0 +1,148 @@
+{% extends 'basetemp/publicbase.html' %}
+
+
+
+
+
+{% block title %}
+Signup ZenTrade
+{% endblock title %}
+
+
+
+
+{% block content %}
+
+<div class="mt-5 mb-3 text-white">
+    .
+</div>
+
+<!-- {% for x in countries %}
+<h1>{{x.name.common}}</h1>
+<p>{{x.idd.root}}{{x.idd.suffixes.0}}</p>
+{% endfor %} -->
+
+<div style="background-color: #ecf0f1;" class="row ">
+<div style="border-radius: 20px;" class=" col-lg-10 col-12 me-auto ms-auto card mt-5 mb-5 p-4 shadow-lg ">
+
+    <h2>Signup Here</h2>
+    
+   
+
+    {% if messages %}
+    {{message.tags}}  
+    <div class="alert alert-primary mt-4" role = 'alert'>
+      {% for message in messages %}
+      {{message}}
+      {% endfor %}
+
+    </div>
+    {% endif %}
+
+
+    <form  action="{% url 'signup' %}?e={{ request.GET.e }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}  
+
+
+        <div class="row mb-2">
+
+            <div class="col-12 col-md-6 mb-2">
+                <label for="inputText" class="col-12 col-form-label">First Name <sup class="text-danger">*</sup> </label>
+                <input required maxlength="40" value="{{data.first_name}}" name="first_name" type="text"  class="form-control">
+            </div>
+
+
+
+
+            <div class="col-12 col-md-6 mb-2">
+                <label for="inputText" class="col-sm-12 col-form-label">Email <sup class="text-danger">*</sup></label>
+                <input required maxlength="80" name="email" value="{{data.email}}" type="email" class="form-control" >
+            </div>
+
+
+   
+
+
+
+            <div class="col-12 col-md-6 mb-4 position-relative">
+                <label for="inputPassword" class="col-sm-12 col-form-label">Password <sup class="text-danger">*</sup></label>
+                <input required type="password" id="inputPassword" name="password"  class="form-control">
+                <span id="togglePassword" class="position-absolute" style="right: 25px; top: 45px; cursor: pointer;">
+                    <i class="bi bi-eye-slash"></i>
+                </span>
+            </div>
+
+
+
+
+            <div class="col-12 col-md-6 mb-4 position-relative">
+                <label for="inputPassword2" class="col-sm-12 col-form-label">Confirm Password <sup class="text-danger">*</sup></label>
+                <input required type="password" id="inputPassword2" name="password2" class="form-control">
+                <span id="togglePassword2" class="position-absolute" style="right: 25px; top: 45px; cursor: pointer;">
+                    <i class="bi bi-eye-slash"></i>
+                </span>
+            </div>
+
+
+ 
+             <div class="col-12 col-md-6  mb-2">
+                <div class="form-check ">
+                    <input class="form-check-input" type="checkbox" required name="checkbox"  value="True" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        I agree with Privacy & Policy and Terms & Condition
+                    </label>
+                  </div>
+             </div>
+
+
+
+             <button type="submit" class="btn btn-primary w-100 mt-3 ">Sign UP</button>
+
+        </div>
+
+
+        <a class="btn d-block text-center mt-2" href="/auth/signin/">Already have an account? <b>Signin for free</b></a>
+
+
+
+    
+    </form>
+    
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#inputPassword');
+    
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+    
+            // Toggle the icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <script>
+        const togglePassword2 = document.querySelector('#togglePassword2');
+        const password2 = document.querySelector('#inputPassword2');
+    
+        togglePassword2.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+            password2.setAttribute('type', type);
+    
+            // Toggle the icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+    
+
+
+   
+</div>
+</div>
+
+
+{% endblock content %}

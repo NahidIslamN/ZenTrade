@@ -1,0 +1,203 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Invest QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+{% block extralinks %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">  
+{% endblock extralinks %}
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">Investments</li>
+      </ol>
+    </nav>
+    {% if GR is None and INV%}     
+    <a class="btn btn-success" id="getreward1" onclick="confirmation()" >Get Bonus Today</a>
+    {% else %}
+    <a class="btn btn-success disabled"  >Get Bonus Today</a>
+    {% endif %}
+  </div>
+  <hr><!-- End Page Title -->
+
+  <!-- "{% url 'signup' %}" -->
+
+  <h4><b>Invest Funds</b></h4>
+  
+  {% if messages %}
+  {{message.tags}}  
+  <div class="alert alert-primary" role = 'alert'>
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+
+  </div>
+  {% endif %}
+
+
+  
+  <form action="#"   method="post">
+    {% csrf_token %}  
+
+
+    <div class="row mb-2">
+
+        
+
+
+        <div class="col-12 col-md-6 mb-2">
+            <label for="inputText" class="col-sm-12 col-form-label">Ammount<sup class="text-danger">*</sup></label>
+            <input required type="number" min="25" name="ammount" value="{{data.ammount}}"  class="form-control">
+        </div>
+
+
+
+
+      <div class="col-6 mb-2">
+        <label for="inputText" class="col-sm-12 col-form-label">Remarks<sup class="text-danger">*</sup></label>
+        <input required type="text" name="remarks" value="{{data.remarks}}"  class="form-control">
+      </div>
+
+
+
+         <button  type="submit" class=" btn btn-block btn-primary w-25 mt-3 me-auto ms-auto ">submit</button>
+
+    </div>
+
+
+
+
+</form>
+
+<hr>
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">My Funts From Other</h5>
+        
+
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+                <th>
+                  <b>I</b>nvestor
+                </th>
+
+                <th>
+                  <b>I</b>nvest To
+                </th>
+
+                <th>Ammount</th>
+                <th>Remarks</th>
+                <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% if investments %}
+              {% for x in investments %}
+              <tr>
+                <td>me</td>
+                <td>QuickTrade</td>
+                <td>{{x.inv_ammount}} $</td>
+                <td>{{x.remarks}}</td>
+                <td>{{ x.updated_at|date:"d-m-Y" }}
+                </td>
+                <td>{% if x.aproved_status %} <b class="text-success">paid</b> {% else %} <b class="text-warning">painding</b>{% endif %} </td>
+              </tr>
+              {% endfor %}
+
+              {% else %}
+              <tr>
+                <td>None</td>
+                <td>None</td>
+                <td>None</td>
+                <td>None
+                </td>
+                <td>None </td>
+              </tr>
+
+              {% endif %}
+
+
+
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+{% block extrascripts %}
+
+<script>
+    function confirmation() {
+        Swal.fire({
+            title: 'Concratulation!',
+            text: "You are getting today's Bonus!",
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonColor: '#26de81',
+            cancelButtonColor: '#0652DD',
+            confirmButtonText: 'Get Reward'
+        }).then((result) => {
+            if (result.isConfirmed) {
+              //document.getElementById('getreward1').click();
+              window.location.href = "/user/getmyreword/";
+                
+            }
+        });
+    }
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% endblock extrascripts %}

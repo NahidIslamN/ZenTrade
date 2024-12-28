@@ -1,0 +1,82 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Notifications QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Notifications</li>
+      </ol>
+  
+    </nav>
+  </div><!-- End Page Title -->
+
+
+  
+
+
+
+  
+  <section  class="section dashboard">
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div style="background-color: white;" class="col-lg-12 p-4">
+
+
+        
+        {% for note in all_note %}
+
+      
+          <div>
+            <h4>{{note.title}}</h4>
+            <p>{{note.discription}}</p>
+            <p>{{ note.created_at|timesince }} ago</p>
+          </div>
+       
+          {% if note.seen_status %}
+          <form method="post" >
+            {% csrf_token %}
+            <input hidden type="number" name="noteid">            
+            <button type="submit" class="btn btn-warning disabled">mark as read</button>
+          </form>
+          {% else %}
+          <form method="post" >
+            {% csrf_token %}
+            <input hidden type="number" value="{{note.id}}" name="noteid">            
+            <button type="submit" class="btn btn-warning">mark as read</button>
+          </form>
+
+          {% endif %}
+       
+          <hr >
+      
+        {% endfor %}
+
+     
+      </div><!-- End Left side columns -->
+
+
+
+    </div>
+  </section>
+
+
+
+
+{% endblock content %}
+
+
+
+

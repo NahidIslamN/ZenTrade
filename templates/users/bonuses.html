@@ -1,0 +1,212 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Bonus QuickTrade
+{% endblock title %}
+
+
+
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">Bonus</li>
+      </ol>
+    </nav>
+  </div>
+  <hr><!-- End Page Title -->
+
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Bonus</h5>
+
+
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+
+              <tr>
+
+                <th>
+                  <b>I</b>d
+                </th>
+                <th>Ammount</th>
+
+            
+
+                <th>Date</th>
+                <th>Time</th>
+
+        
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {% if bonuses %}
+              {% for x in bonuses %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{x.ammount|floatformat:2}} $</td>
+
+                
+       
+
+                <td>{{x.created_at|date:"d-m-Y"}}</td>
+                <td>{{x.created_at|time}}</td>
+                
+              </tr>
+              
+              {% endfor %}
+
+              {% else %}
+              <tr>
+                <td>None</td>
+                <td>None</td>
+                <td>None</td>
+                <td>None
+                </td>
+                <td>None </td>
+              </tr>
+
+              {% endif %}
+
+
+
+            </tbody>
+
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+{% if where_i_manage %}
+{% for x in where_i_manage %}
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal-{{x.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Payammount with binence trazection id!</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+
+        <div class="modal-body">
+     
+
+          <div class="row">
+
+            <div class="col-12">
+
+              <form class="d-block" action="{% url 'processpayout' %}" method="post" style="display: inline-block;">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{x.id}}">
+                <input type="hidden" name="user_id" value="{{x.admin_take.id}}">
+
+                <div class="col-12 mb-2">
+                    <label class="col-12 col-form-label">TnX Binance<sup class="text-danger">*</sup></label>
+                    <input required maxlength="80" name="tnx_id" value="{{data.tnx_id}}" type="text" class="form-control" >
+                </div>
+
+
+                <button class="btn btn-success w-100" type="submin">pay</button>
+              </form>
+
+
+            </div>
+
+          </div>
+
+
+
+
+        </div>
+    
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+  {% endif %}
+
+
+
+
+{% endblock content %}
+
+
+
+{% block extrascripts %}
+
+
+<script>
+    function calculateCharge() {
+        var amount = document.getElementById("amount").value;
+        var charge = 0;
+        if (amount) {
+            charge = (amount * 0.05).toFixed(2); // Calculate 5% of the amount
+        }
+        document.getElementById("charge").value = charge;
+    }
+</script>
+
+
+
+
+<script>
+
+
+
+    function confirmAproved(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Aproved the user payout requests!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, aproved it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('aprove-form-'+id).submit();
+            }
+        });
+      }
+
+    </script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+{% endblock extrascripts %}

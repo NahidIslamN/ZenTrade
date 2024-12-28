@@ -1,0 +1,236 @@
+{% extends 'basetemp/userbase.html'  %}
+
+{% block title %}
+Manage funds QuickTrade
+{% endblock title %}
+
+
+
+{% block extralinks %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">  
+{% endblock extralinks %}
+
+
+
+
+{% block content %}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user/deshboard/">Deshboard</a></li>
+        <li class="breadcrumb-item active">Manage Funds</li>
+      </ol>
+    </nav>
+  </div>
+  <hr><!-- End Page Title -->
+
+<hr>
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Requests</h5>
+
+
+          {% if messages %}
+          {{message.tags}}  
+          <div class="alert alert-primary" role = 'alert'>
+            {% for message in messages %}
+            {{message}}
+            {% endfor %}
+  
+          </div>
+          {% endif %}
+
+
+          <a class="d-block mb-3" href="/accounts/managefunds/">manage funds.</a>
+
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+                <th>
+                  <b>F</b>rom
+                </th>
+
+
+                <th>
+                  <b>T</b>o
+                </th>
+
+
+
+
+                <th>Ammount</th>
+                <th>main</th>
+
+                <th>Remarks</th>
+                <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% if where_i_manage %}
+              {% for x in where_i_manage %}
+              <tr>
+                <td>me</td>
+                <td>{{x.to_user.email}}</td>
+                <td>{{x.share_ammount}} $</td>
+                <td>
+                  {% if x.main_account %}
+                  <input type="checkbox" checked>
+                  {% else %}
+                  <input type="checkbox">
+                  {% endif %}
+                </td>
+                <td>{{x.remarks}}</td>
+                <td>{{ x.updated_at|date:"d-m-Y" }}
+                </td>
+
+                <td>
+
+                    {% if x.aproved_status %}
+                    <form id="delete-form-{{x.id}}" action="{% url 'fundaceptor' x.id %}"  method="post" style="display: inline-block;">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button  class="btn btn-danger" disabled type="button" onclick="confirmDelete({{x.id}})"> <i class="bi bi-trash"></i> </button>
+                     </form>
+                     {% else %}
+                     <form id="delete-form-{{x.id}}" action="{% url 'fundaceptor' x.id %}"  method="post" style="display: inline-block;">
+                      {% csrf_token %}
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button  class="btn btn-danger" type="button" onclick="confirmDelete({{x.id}})"> <i class="bi bi-trash"></i> </button>
+                      </form>
+
+                    {% endif %}
+
+
+                    {% if x.aproved_status %}
+                    <form id="aprove-form-{{x.id}}" action="{% url 'fundaceptor' x.id %}" method="post" style="display: inline-block;">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="PUT">
+                        <button class="btn btn-success" disabled type="button" onclick="confirmAproved({{x.id}})"> <i class="bi bi-check-circle"></i> </button>
+                    </form>
+                    {% else %}
+                    <form id="aprove-form-{{x.id}}" action="{% url 'fundaceptor' x.id %}" method="post" style="display: inline-block;">
+                      {% csrf_token %}
+                      <input type="hidden" name="_method" value="PUT">
+                      <button class="btn btn-success" type="button" onclick="confirmAproved({{x.id}})"> <i class="bi bi-check-circle"></i> </button>
+                    </form>
+                    {% endif %}
+
+                    
+                </td>
+
+              </tr>
+              {% endfor %}
+
+              {% else %}
+              <tr>
+                <td>None</td>
+                <td>None</td>
+                <td>None</td>
+                <td>None
+                </td>
+                <td>None </td>
+              </tr>
+
+              {% endif %}
+
+
+
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+{% block extrascripts %}
+
+<script>
+
+
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        });
+    }
+
+
+
+
+    function confirmAproved(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Fund will cut from your Account!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, aproved it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('aprove-form-'+id).submit();
+            }
+        });
+      }
+
+    </script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock extrascripts %}
+
+
+
