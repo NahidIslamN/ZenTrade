@@ -201,21 +201,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # e.g., 'smtp.example.com'
 EMAIL_PORT = 587  # Port for SMTP (usually 587 for TLS)
 EMAIL_USE_TLS = True  # Whether to use TLS encryption
-EMAIL_HOST_USER = 'info.quicktradeing@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'kssagvdmanexdybt'  # Your email password or app password if using Gmail
-DEFAULT_FROM_EMAIL = 'info.quicktradeing@gmail.com'  # Default sender email address
+EMAIL_HOST_USER = # Your email address
+EMAIL_HOST_PASSWORD =   # Your email password or app password if using Gmail
+DEFAULT_FROM_EMAIL =# Default sender email address
 
 
-
-
-
-
-# # Email settings
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'mail.marinasinga.com'  # Your SMTP server
-# EMAIL_PORT = 587  # Port for SSL465
-# EMAIL_USE_TLS = True
-# # EMAIL_USE_SSL = False  # Use SSL
-# EMAIL_HOST_USER = 'info@marinasinga.com'  # Your email address
-# EMAIL_HOST_PASSWORD = '~8v]ot;e79(@'  # Your email password
-# DEFAULT_FROM_EMAIL = 'info@marinasinga.com'  # Default sender email address
